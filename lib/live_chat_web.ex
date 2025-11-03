@@ -84,8 +84,9 @@ defmodule LiveChatWeb do
 
       # HTML escaping functionality
       import Phoenix.HTML
-      # Core UI components
-      import LiveChatWeb.CoreComponents
+
+      # Import DaisyUI components into your project
+      use DaisyUIComponents, core_components: true
 
       # Common modules used in templates
       alias Phoenix.LiveView.JS

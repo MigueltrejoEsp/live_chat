@@ -65,7 +65,8 @@ defmodule LiveChat.MixProject do
       {:gettext, "~> 0.26"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"}
+      {:bandit, "~> 1.5"},
+      {:daisy_ui_components, "~> 0.9"}
     ]
   end
 

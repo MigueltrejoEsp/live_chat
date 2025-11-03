@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :live_chat, LiveChat.Repo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "live_chat_dev",
+  username: System.fetch_env!("POSTGRES_USER"),
+  password: System.fetch_env!("POSTGRES_PASSWORD"),
+  hostname: System.fetch_env!("POSTGRES_HOST"),
+  database: System.fetch_env!("POSTGRES_DB"),
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

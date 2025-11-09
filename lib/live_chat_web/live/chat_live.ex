@@ -1,4 +1,4 @@
-defmodule LiveChatWeb.HomeLive do
+defmodule LiveChatWeb.ChatLive do
   use LiveChatWeb, :live_view
   alias Phoenix.PubSub
 

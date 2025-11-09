@@ -24,8 +24,8 @@ defmodule LiveChatWeb.HomeLive do
       <.simple_form
         id="chat_form"
         for={@form}
-        phx-change="validate"
         phx-submit="send_message"
+        phx-change="sync_form"
         class="w-80% flex-none flex flex-row items-center p-4"
         autocomplete="off"
       >
@@ -65,6 +65,7 @@ defmodule LiveChatWeb.HomeLive do
   def chat_input(assigns) do
     ~H"""
     <input
+      phx-throttle="2000"
       type={@type}
       name={@field.name}
       id={@field.id}
@@ -78,7 +79,7 @@ defmodule LiveChatWeb.HomeLive do
     """
   end
 
-  def handle_event("validate", attrs, socket),
+  def handle_event("sync_form", attrs, socket),
     do: {:noreply, assign(socket, :form, to_form(attrs))}
 
   def handle_event("send_message", %{"message" => ""}, socket), do: {:noreply, socket}

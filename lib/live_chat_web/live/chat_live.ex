@@ -2,61 +2,70 @@ defmodule LiveChatWeb.ChatLive do
   use LiveChatWeb, :live_view
   alias Phoenix.PubSub
 
-  def mount(%{"chat_id" => chat_id}, _session, socket) do
+  def mount(%{"chat_id" => chat_id}, %{"current_scope" => current_scope}, socket) do
     PubSub.subscribe(LiveChat.PubSub, chat_id)
-    {:ok, assign(socket, chat_id: chat_id, messages: [], form: to_form(%{}))}
+
+    {:ok,
+     assign(socket,
+       chat_id: chat_id,
+       messages: [],
+       form: to_form(%{}),
+       current_scope: current_scope
+     )}
   end
 
   def render(assigns) do
     ~H"""
-    <div class="h-full max-h-screen w-full overflow-y-scroll flex flex-col">
-      <div class="flex-1 flex flex-col justify-end mx-2 sm:mx-6">
-        <div
-          :for={{pid, message} <- @messages}
-          class={"chat #{if pid == self(), do: "chat-end", else: "chat-start"}"}
-        >
-          <div class={"chat-bubble #{if pid == self(), do: "chat-bubble-success", else: "chat-bubble-info"}"}>
-            <p :if={pid != self()}>{inspect(pid)}:</p>
-            <p>{message}</p>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
+      <div class="h-full max-h-screen w-full overflow-y-scroll flex flex-col">
+        <div class="flex-1 flex flex-col justify-end mx-2 sm:mx-6">
+          <div
+            :for={{pid, message} <- @messages}
+            class={"chat #{if pid == self(), do: "chat-end", else: "chat-start"}"}
+          >
+            <div class={"chat-bubble #{if pid == self(), do: "chat-bubble-success", else: "chat-bubble-info"}"}>
+              <p :if={pid != self()}>{inspect(pid)}:</p>
+              <p>{message}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <.simple_form
-        id="chat_form"
-        for={@form}
-        phx-submit="send_message"
-        phx-change="sync_form"
-        class="w-80% flex-none flex flex-row items-center p-4"
-        autocomplete="off"
-      >
-        <.chat_input
-          field={@form[:message]}
-          type="text"
-          class={"flex-1 #{if empty?(@form[:message].value), do: "rounded-full", else: "rounded-l-full"}"}
-        />
-        <.button
-          :if={not empty?(@form[:message].value)}
-          type="submit"
-          class="flex-none rounded-r-full no-animation"
-          color="primary"
+        <.simple_form
+          id="chat_form"
+          for={@form}
+          phx-submit="send_message"
+          phx-change="sync_form"
+          class="w-80% flex-none flex flex-row items-center p-4"
+          autocomplete="off"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-6"
+          <.chat_input
+            field={@form[:message]}
+            type="text"
+            class={"flex-1 #{if empty?(@form[:message].value), do: "rounded-full", else: "rounded-l-full"}"}
+          />
+          <.button
+            :if={not empty?(@form[:message].value)}
+            type="submit"
+            class="flex-none rounded-r-full no-animation"
+            color="primary"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
-            />
-          </svg>
-        </.button>
-      </.simple_form>
-    </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+              />
+            </svg>
+          </.button>
+        </.simple_form>
+      </div>
+    </Layouts.app>
     """
   end
 

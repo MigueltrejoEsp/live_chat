@@ -6,12 +6,14 @@ defmodule LiveChatWeb.HomeHTML do
 
   def home(assigns) do
     ~H"""
-    <div class="flex flex-col items-center justify-center h-screen gap-4">
-      <h1 class="text-2xl font-bold">Welcome to Live Chat</h1>
-      <p class="text-lg">
-        This is a simple live chat application built with Phoenix.
-      </p>
-    </div>
+    <Layouts.app flash={@flash} current_scope={@current_scope}>
+      <div class="h-full flex flex-col items-center justify-start gap-4 mx-auto mt-8 p-4 text-center">
+        <h1 class="text-2xl font-bold">Welcome to Live Chat</h1>
+        <p class="text-lg">
+          This is a simple live chat application built with Phoenix.
+        </p>
+      </div>
+    </Layouts.app>
     """
   end
 end

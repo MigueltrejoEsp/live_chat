@@ -69,9 +69,13 @@ defmodule LiveChatWeb.UserAuth do
          {user, token_inserted_at} <- Accounts.get_user_by_session_token(token) do
       conn
       |> assign(:current_scope, Scope.for_user(user))
+      |> put_session(:current_scope, Scope.for_user(user))
       |> maybe_reissue_user_session_token(user, token_inserted_at)
     else
-      nil -> assign(conn, :current_scope, Scope.for_user(nil))
+      nil ->
+        conn
+        |> assign(:current_scope, Scope.for_user(nil))
+        |> put_session(:current_scope, Scope.for_user(nil))
     end
   end
 

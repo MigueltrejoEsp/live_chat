@@ -21,7 +21,6 @@ defmodule LiveChatWeb.Router do
     pipe_through :browser
 
     get "/", HomeController, :home
-
     live "/:chat_id", ChatLive
   end
 

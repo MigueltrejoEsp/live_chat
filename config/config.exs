@@ -67,6 +67,8 @@ config :tailwind,
     cd: Path.expand("..", __DIR__)
   ]
 
+config :daisy_ui_components, translate_function: &LiveChatWeb.CoreComponents.translate_error/1
+
 # Configures Elixir's Logger
 config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",

@@ -2,7 +2,8 @@ defmodule LiveChatWeb.ChatLive do
   use LiveChatWeb, :live_view
   alias Phoenix.PubSub
 
-  def mount(%{"chat_id" => chat_id}, %{"current_scope" => current_scope}, socket) do
+  def mount(%{"chat_id" => chat_id}, %{"current_scope" => current_scope}, socket)
+      when not is_nil(current_scope) do
     PubSub.subscribe(LiveChat.PubSub, chat_id)
 
     {:ok,

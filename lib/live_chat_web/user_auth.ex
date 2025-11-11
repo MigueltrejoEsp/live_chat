@@ -74,8 +74,8 @@ defmodule LiveChatWeb.UserAuth do
     else
       nil ->
         conn
-        |> assign(:current_scope, Scope.for_user(nil))
-        |> put_session(:current_scope, Scope.for_user(nil))
+        |> assign(:current_scope, nil)
+        |> put_session(:current_scope, nil)
     end
   end
 

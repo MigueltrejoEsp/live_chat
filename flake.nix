@@ -25,9 +25,9 @@
         POSTGRES_USER = "postgres";
         POSTGRES_PASSWORD = "postgres";
         POSTGRES_HOST = "localhost";
-        POSTGRES_DB = "liv_chat_dev";
+        POSTGRES_DB = "live_chat_dev";
         TAILWINDCSS_PATH="${pkgs.lib.getExe pkgs.tailwindcss_4}";
-        TAILWINDCSS_VERSION="4.1.16";
+        TAILWINDCSS_VERSION="4.1.17";
         ESBUILD_PATH="${pkgs.lib.getExe pkgs.esbuild}";
         ESBUILD_VERSION="0.25.5";
       };

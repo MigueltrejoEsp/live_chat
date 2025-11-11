@@ -7,6 +7,19 @@
 # General application configuration
 import Config
 
+config :live_chat, :scopes,
+  user: [
+    default: true,
+    module: LiveChat.Accounts.Scope,
+    assign_key: :current_scope,
+    access_path: [:user, :id],
+    schema_key: :user_id,
+    schema_type: :id,
+    schema_table: :users,
+    test_data_fixture: LiveChat.AccountsFixtures,
+    test_setup_helper: :register_and_log_in_user
+  ]
+
 config :live_chat,
   ecto_repos: [LiveChat.Repo],
   generators: [timestamp_type: :utc_datetime]
@@ -53,6 +66,8 @@ config :tailwind,
     ),
     cd: Path.expand("..", __DIR__)
   ]
+
+config :daisy_ui_components, translate_function: &LiveChatWeb.CoreComponents.translate_error/1
 
 # Configures Elixir's Logger
 config :logger, :default_formatter,

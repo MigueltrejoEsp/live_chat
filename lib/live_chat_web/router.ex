@@ -21,6 +21,7 @@ defmodule LiveChatWeb.Router do
     pipe_through :browser
 
     get "/", HomeController, :home
+    post "/redirect-to-chat", HomeController, :redirect_to_chat
   end
 
   scope "/chat", LiveChatWeb do
